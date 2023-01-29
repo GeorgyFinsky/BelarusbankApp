@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+protocol BankFacility {
+    var id: String { get }
+    var city: String { get }
+    var gpsX: String { get }
+    var gpsY: String { get }
+    
+}
