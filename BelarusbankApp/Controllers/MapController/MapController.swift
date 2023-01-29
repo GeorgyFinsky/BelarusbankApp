@@ -29,7 +29,7 @@ class MapController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
-                
+        
         setupUI()
         setupCluster()
         getData()
@@ -47,9 +47,10 @@ class MapController: UIViewController {
         let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
         let renderer = GMUDefaultClusterRenderer(mapView: self.mapView, clusterIconGenerator: iconGenerator)
         
+        renderer.delegate = self
         clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
         clusterManager.setMapDelegate(self)
-        clusterManager.cluster()
+//        clusterManager.cluster()
     }
     
     private func getData() {
@@ -80,6 +81,7 @@ class MapController: UIViewController {
         self.facilitys.append(facility)
         
         self.clusterManager.add(FacilityMarker(facility: facility))
+        self.clusterManager.cluster()
     }
     
     private func setupMapCamera(lat: Double, lon: Double, zoom: Float) {
@@ -126,7 +128,7 @@ extension MapController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let userLocation = manager.location?.coordinate else { return }
-
+        
         self.locationManager.stopUpdatingLocation()
         setupMapCamera(lat: userLocation.latitude, lon: userLocation.longitude, zoom: 12)
     }
@@ -136,5 +138,27 @@ extension MapController: CLLocationManagerDelegate {
 //MARK: -
 //MARK: GMSMapViewDelegate
 extension MapController: GMSMapViewDelegate {
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        mapView.animate(toLocation: marker.position)
+        
+        if marker.userData is GMUCluster {
+            mapView.animate(toZoom: mapView.camera.zoom + 1)
+            return true
+        }
+        return false
+    }
+    
+}
+
+//MARK: -
+//MARK: GMUClusterRendererDelegate
+extension MapController: GMUClusterRendererDelegate {
+    
+    func renderer(_ renderer: GMUClusterRenderer, willRenderMarker marker: GMSMarker) {
+        if let facilityMarker = marker.userData as? FacilityMarker {
+            marker.icon = facilityMarker.icon
+        }
+    }
     
 }
