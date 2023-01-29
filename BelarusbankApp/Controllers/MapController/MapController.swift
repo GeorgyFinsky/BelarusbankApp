@@ -13,7 +13,8 @@ import CoreLocation
 class MapController: UIViewController {
     private let locationManager = CLLocationManager()
     private var clusterManager: GMUClusterManager!
-
+    private var facilitys = [FacilityModel]()
+    private var cites = [CityModel]()
     
     //MARK: -
     //MARK: IBOutlets
