@@ -30,6 +30,7 @@ class MapController: UIViewController {
         locationManager.startUpdatingLocation()
                 
         setupUI()
+        setupCluster()
     }
     
     private func setupUI() {
