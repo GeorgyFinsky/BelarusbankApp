@@ -22,7 +22,13 @@ class MapController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupUI()
     }
     
+    private func setupUI() {
+        self.topContainerView.layer.cornerRadius = 20
+        self.topContainerView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        
+    }
     
 }
