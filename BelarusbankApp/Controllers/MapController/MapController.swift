@@ -12,9 +12,11 @@ import CoreLocation
 
 class MapController: UIViewController {
     private let locationManager = CLLocationManager()
+    private var clusterManager: GMUClusterManager!
+
     
     //MARK: -
-    //MARK: Outlets
+    //MARK: IBOutlets
     @IBOutlet weak var topContainerView: UIView!
     @IBOutlet weak var reloadDataButton: UIButton!
     @IBOutlet weak var mapView: GMSMapView!
@@ -37,6 +39,16 @@ class MapController: UIViewController {
         self.mapView.isMyLocationEnabled = true
     }
     
+    private func setupCluster() {
+        let iconGenerator = GMUDefaultClusterIconGenerator()
+        let algorithm = GMUNonHierarchicalDistanceBasedAlgorithm()
+        let renderer = GMUDefaultClusterRenderer(mapView: self.mapView, clusterIconGenerator: iconGenerator)
+        
+        clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
+        clusterManager.setMapDelegate(self)
+        clusterManager.cluster()
+    }
+    
     private func setupMapCamera(lat: Double, lon: Double, zoom: Float) {
         let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lon, zoom: zoom)
         
@@ -54,5 +66,11 @@ extension MapController: CLLocationManagerDelegate {
 
         setupMapCamera(lat: userLocation.latitude, lon: userLocation.longitude, zoom: 12)
     }
+    
+}
+
+//MARK: -
+//MARK: GMSMapViewDelegate
+extension MapController: GMSMapViewDelegate {
     
 }
