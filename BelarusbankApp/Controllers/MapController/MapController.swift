@@ -127,6 +127,7 @@ extension MapController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let userLocation = manager.location?.coordinate else { return }
 
+        self.locationManager.stopUpdatingLocation()
         setupMapCamera(lat: userLocation.latitude, lon: userLocation.longitude, zoom: 12)
     }
     
