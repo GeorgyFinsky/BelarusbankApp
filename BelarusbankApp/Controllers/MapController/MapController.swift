@@ -32,6 +32,7 @@ class MapController: UIViewController {
                 
         setupUI()
         setupCluster()
+        getData()
     }
     
     private func setupUI() {
@@ -49,6 +50,36 @@ class MapController: UIViewController {
         clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
         clusterManager.setMapDelegate(self)
         clusterManager.cluster()
+    }
+    
+    private func getData() {
+        BankFacilityProvider().getATMs { [weak self] result in
+            guard let self else { return }
+            
+            for item in result {
+                self.decodeData(item: item, type: .atm)
+            }
+        } failure: { errorString in
+            print(errorString)
+        }
+        
+        BankFacilityProvider().getDepartments { [weak self] result in
+            guard let self else { return }
+            
+            for item in result {
+                self.decodeData(item: item, type: .department)
+            }
+        } failure: { errorString in
+            print(errorString)
+        }
+    }
+    
+    private func decodeData<T: BankFacility>(item: T, type: FacilityType) {
+        let facility = FacilityModel(type: type, id: item.id, city: item.city, coordinates: CLLocationCoordinate2D(latitude: Double(item.gpsX) ?? 0.0, longitude: Double(item.gpsY) ?? 0.0))
+        
+        self.facilitys.append(facility)
+        
+        self.clusterManager.add(FacilityMarker(facility: facility))
     }
     
     private func setupMapCamera(lat: Double, lon: Double, zoom: Float) {
