@@ -11,6 +11,7 @@ import GoogleMapsUtils
 import CoreLocation
 
 class MapController: UIViewController {
+    private let locationManager = CLLocationManager()
     
     //MARK: -
     //MARK: Outlets
@@ -22,6 +23,10 @@ class MapController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
+        locationManager.startUpdatingLocation()
+                
         setupUI()
     }
     
@@ -29,6 +34,25 @@ class MapController: UIViewController {
         self.topContainerView.layer.cornerRadius = 20
         self.topContainerView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         
+        self.mapView.isMyLocationEnabled = true
+    }
+    
+    private func setupMapCamera(lat: Double, lon: Double, zoom: Float) {
+        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lon, zoom: zoom)
+        
+        mapView?.animate(to: camera)
+    }
+    
+}
+
+//MARK: -
+//MARK: CLLocationManagerDelegate
+extension MapController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let userLocation = manager.location?.coordinate else { return }
+
+        setupMapCamera(lat: userLocation.latitude, lon: userLocation.longitude, zoom: 12)
     }
     
 }
