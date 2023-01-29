@@ -59,6 +59,15 @@ class MapController: UIViewController {
 }
 
 //MARK: -
+//MARK: FacilityModel
+struct FacilityModel {
+    var type: FacilityType
+    var id: String
+    var city: String
+    var coordinates: CLLocationCoordinate2D
+}
+
+//MARK: -
 //MARK: CLLocationManagerDelegate
 extension MapController: CLLocationManagerDelegate {
     
