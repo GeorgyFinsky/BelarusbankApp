@@ -22,6 +22,10 @@
                     <rect key="frame" x="0.0" y="88" width="393" height="730"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="8ml-MQ-0G5">
+                    <rect key="frame" x="178" y="420" width="37" height="37"/>
+                    <color key="color" systemColor="systemGreenColor"/>
+                </activityIndicatorView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vAW-4Y-osW">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="113"/>
                     <subviews>
@@ -53,6 +57,7 @@
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="h9M-f4-rYl" firstAttribute="top" secondItem="vAW-4Y-osW" secondAttribute="bottom" constant="-25" id="2Sx-Nk-6s6"/>
+                <constraint firstItem="8ml-MQ-0G5" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="5iD-FW-s5e"/>
                 <constraint firstItem="vAW-4Y-osW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="HoN-AJ-nfq"/>
                 <constraint firstItem="Z6K-je-MzU" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="UKd-08-8ol"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="h9M-f4-rYl" secondAttribute="bottom" id="bP0-oA-BYm"/>
@@ -60,6 +65,7 @@
                 <constraint firstItem="vAW-4Y-osW" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="izN-yu-0JK"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="vAW-4Y-osW" secondAttribute="trailing" id="jge-4g-Z2U"/>
                 <constraint firstItem="h9M-f4-rYl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="uCm-fb-FRc"/>
+                <constraint firstItem="8ml-MQ-0G5" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="uT7-ij-Cso"/>
             </constraints>
             <point key="canvasLocation" x="-37.404580152671755" y="19.718309859154932"/>
         </view>
