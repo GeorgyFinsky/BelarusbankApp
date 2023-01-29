@@ -59,6 +59,19 @@ class MapController: UIViewController {
 }
 
 //MARK: -
+//MARK: FacilityMarker
+class FacilityMarker: GMSMarker {
+    var facility: FacilityModel?
+    
+    convenience init(facility: FacilityModel) {
+        self.init(position: facility.coordinates)
+        self.facility = facility
+        self.icon = facility.type.markerIcon
+    }
+    
+}
+
+//MARK: -
 //MARK: FacilityModel
 struct FacilityModel {
     var type: FacilityType
