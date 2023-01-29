@@ -68,6 +68,14 @@ struct FacilityModel {
 }
 
 //MARK: -
+//MARK: CityModel
+struct CityModel {
+    var name: String
+    var atm: Bool
+    var department: Bool
+}
+
+//MARK: -
 //MARK: CLLocationManagerDelegate
 extension MapController: CLLocationManagerDelegate {
     
