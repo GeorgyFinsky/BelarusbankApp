@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+enum FilterType: String {
+    case priceFromLow = "Сначала дешевые"
+    case priceFromHigh = "Сначала дорогие"
+    case weightFromLow = "По возростанию веса"
+    case weightFromHight = "По убыванию веса"
+}
