@@ -11,6 +11,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapController" customModule="BelarusbankApp" customModuleProvider="target">
             <connections>
                 <outlet property="activityIndicator" destination="8ml-MQ-0G5" id="47E-2i-Rfq"/>
+                <outlet property="cityCollectionView" destination="lKr-Pl-9rT" id="QLw-tO-huE"/>
+                <outlet property="facilityTypeCollection" destination="bSG-Xu-4qO" id="MC0-Yj-akg"/>
                 <outlet property="mapView" destination="h9M-f4-rYl" id="iOW-ND-9P2"/>
                 <outlet property="reloadDataButton" destination="v44-Y6-ixp" id="GgO-Z0-1Hr"/>
                 <outlet property="topContainerView" destination="vAW-4Y-osW" id="OG1-hw-R9C"/>

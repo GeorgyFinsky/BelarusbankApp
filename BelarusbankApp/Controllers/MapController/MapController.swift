@@ -15,7 +15,8 @@ class MapController: UIViewController {
     private var clusterManager: GMUClusterManager!
     private var facilitys = [FacilityModel]()
     private var cites = [CityModel]()
-    private var nearestCiry: String?
+//    private var nearestCiry: CityModel?
+    private var selectedCity: CityModel?
     
     //MARK: -
     //MARK: IBOutlets
@@ -23,6 +24,8 @@ class MapController: UIViewController {
     @IBOutlet weak var reloadDataButton: UIButton!
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var cityCollectionView: UICollectionView!
+    @IBOutlet weak var facilityTypeCollection: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +33,9 @@ class MapController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
+        
+        cityCollectionView.dataSource = self
+        facilityTypeCollection.dataSource = self
         
         setupInitialUI()
         setupCluster()
@@ -118,16 +124,16 @@ class MapController: UIViewController {
     
     private func getNearestCity() {
         guard let userLocation = locationManager.location else { return }
-        var nearestFacilityDistance: (FacilityModel, Double) = (facilitys[0], 700000)
+        var nearestFacilityDistance: (String, Double) = ("Минск", 700000)
           
         facilitys.forEach { facility in
             let distance = userLocation.distance(from: facility.coordinates)
             
             if distance < nearestFacilityDistance.1 {
-                nearestFacilityDistance = (facility, distance)
+                nearestFacilityDistance = (facility.city, distance)
             }
         }
-        self.nearestCiry = nearestFacilityDistance.0.city
+        self.selectedCity = cites.first(where: { $0.name == nearestFacilityDistance.0 })
     }
     
     private func setupMapCamera(lat: Double, lon: Double, zoom: Float) {
@@ -166,6 +172,20 @@ struct CityModel {
     var name: String
     var atm: Bool
     var department: Bool
+    
+    var filterArray: [String] {
+        var filter: [String]
+        if atm {
+            filter.append(FacilityType.atm.rawValue)
+        }
+        if department {
+            filter.append(FacilityType.department.rawValue)
+        }
+        if filter.count == 2 {
+            filter.append(FacilityType.all.rawValue)
+        }
+        return filter
+    }
 }
 
 //MARK: -
@@ -205,6 +225,24 @@ extension MapController: GMUClusterRendererDelegate {
         if let facilityMarker = marker.userData as? FacilityMarker {
             marker.icon = facilityMarker.icon
         }
+    }
+    
+}
+
+//MARK: -
+//MARK: UICollectionViewDataSource
+extension MapController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if collectionView == cityCollectionView {
+            return cites.count
+        } else {
+            return selectedCity?.filterArray.count ?? 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        <#code#>
     }
     
 }
