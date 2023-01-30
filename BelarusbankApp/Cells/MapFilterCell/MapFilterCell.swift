@@ -20,6 +20,8 @@ class MapFilterCell: UICollectionViewCell {
     }
     
     func set(value: String) {
+        containerView.backgroundColor = isSelected ? .white : .systemGreen
+        dataLabel.textColor = isSelected ? .systemGreen : .white
         self.dataLabel.text = value
     }
     

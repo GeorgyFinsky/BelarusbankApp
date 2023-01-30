@@ -13,14 +13,15 @@ import CoreLocation
 class MapController: UIViewController {
     private let locationManager = CLLocationManager()
     private var clusterManager: GMUClusterManager!
-    private var facilitys = [FacilityModel]()
+    private var facilites = [FacilityModel]()
+    private var displayFacilites = [FacilityModel]()
     private var cites = [CityModel]()
-    private var requestsStatus = (false, false) {
+    private var requestsResults = (false, false) {
         didSet {
-            requestsStatus == (true, true) ? self.getDataUI(status: .getSuccessResult) : nil
+            requestsResults == (true, true) ? self.getDataUI(status: .getSuccessResult) : nil
         }
     }
-    private var selectedCity: CityModel? {
+    private var selectedCity: (CityModel, IndexPath)? {
         didSet {
             cityCollectionView.reloadData()
             facilityTypeCollection.reloadData()
@@ -66,9 +67,9 @@ class MapController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         cityCollectionView.collectionViewLayout = layout
+//        facilityTypeCollection.collectionViewLayout = facilitysCollectionLayout
         topContainerView.layer.cornerRadius = 20
         topContainerView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-//        self.topContainerView.isUserInteractionEnabled = false
         mapView.isMyLocationEnabled = true
         
         getDataUI(status: .sendRequest)
@@ -108,7 +109,7 @@ class MapController: UIViewController {
             for item in result {
                 self.decodeData(item: item, type: .atm)
             }
-            self.requestsStatus.0 = true
+            self.requestsResults.0 = true
         } failure: { errorString in
             print(errorString)
             self.getDataUI(status: .getFailureResult)
@@ -120,7 +121,7 @@ class MapController: UIViewController {
             for item in result {
                 self.decodeData(item: item, type: .department)
             }
-            self.requestsStatus.1 = true
+            self.requestsResults.1 = true
         } failure: { errorString in
             print(errorString)
             self.getDataUI(status: .getFailureResult)
@@ -130,7 +131,7 @@ class MapController: UIViewController {
     private func decodeData<T: BankFacility>(item: T, type: FacilityType) {
         let facility = FacilityModel(type: type, id: item.id, city: item.city, coordinates: CLLocation(latitude: Double(item.gpsX) ?? 0.0, longitude: Double(item.gpsY) ?? 0.0))
         
-        self.facilitys.append(facility)
+        self.facilites.append(facility)
         self.getCites(city: facility.city, type: type)
         self.clusterManager.add(FacilityMarker(facility: facility))
     }
@@ -156,14 +157,15 @@ class MapController: UIViewController {
         guard let userLocation = locationManager.location else { return }
         var nearestFacilityDistance: (String, Double) = ("Минск", 700000)
         
-        facilitys.forEach { facility in
+        facilites.forEach { facility in
             let distance = userLocation.distance(from: facility.coordinates)
             
             if distance < nearestFacilityDistance.1 {
                 nearestFacilityDistance = (facility.city, distance)
             }
         }
-        self.selectedCity = cites.first(where: { $0.name == nearestFacilityDistance.0 })
+        guard let index = cites.firstIndex(where: { $0.name == nearestFacilityDistance.0 }) else { return }
+        self.selectedCity = (cites[index], IndexPath(row: index, section: 0))
     }
     
     private func setupMapCamera(lat: Double, lon: Double, zoom: Float) {
@@ -205,15 +207,10 @@ struct CityModel {
     
     var filterArray: [String] {
         var filter = [String]()
-        if atm {
-            filter.append(FacilityType.atm.rawValue)
-        }
-        if department {
-            filter.append(FacilityType.department.rawValue)
-        }
-        if filter.count == 2 {
-            filter.append(FacilityType.all.rawValue)
-        }
+        
+        atm ? filter.append(FacilityType.atm.rawValue) : nil
+        department ? filter.append(FacilityType.atm.rawValue) : nil
+        filter.count == 2 ? filter.append(FacilityType.all.rawValue) : nil
         return filter
     }
 }
@@ -267,13 +264,14 @@ extension MapController: UICollectionViewDataSource {
         if collectionView == cityCollectionView {
             return cites.count
         } else {
-            return selectedCity?.filterArray.count ?? 0
+            return selectedCity?.0.filterArray.count ?? 0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == cityCollectionView {
             let filterCell = cityCollectionView.dequeueReusableCell(withReuseIdentifier: MapFilterCell.id, for: indexPath)
+            filterCell.isSelected = selectedCity?.1 == indexPath
             (filterCell as? MapFilterCell)?.set(value: cites[indexPath.row].name)
             
             return filterCell
@@ -281,7 +279,7 @@ extension MapController: UICollectionViewDataSource {
             let filterCell = facilityTypeCollection.dequeueReusableCell(withReuseIdentifier: MapFilterCell.id, for: indexPath)
             guard let selectedCity else { return filterCell }
             
-            (filterCell as? MapFilterCell)?.set(value: selectedCity.filterArray[indexPath.row])
+            (filterCell as? MapFilterCell)?.set(value: selectedCity.0.filterArray[indexPath.row])
             return filterCell
         }
     }
