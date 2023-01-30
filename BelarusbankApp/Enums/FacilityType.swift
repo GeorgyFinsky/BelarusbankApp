@@ -10,9 +10,9 @@ import UIKit
 import GoogleMaps
 
 enum FacilityType: String, CaseIterable {
-    case atm = "ATM"
-    case department = "Departmnt"
-    case all = "All"
+    case atm = "Банкоматы"
+    case department = "Отделения"
+    case all = "Всё"
     
     var markerIcon: UIImage {
         return GMSMarker.markerImage(with: markerColor)

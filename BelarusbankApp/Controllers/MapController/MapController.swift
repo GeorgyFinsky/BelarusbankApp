@@ -20,13 +20,15 @@ final class MapController: UIViewController {
             requestsResults == (true, true) ? self.getDataUI(status: .getSuccessResult) : nil
         }
     }
-    private var selectedCityIndex = IndexPath(row: 1, section: 0) {
+    private var selectedCityIndex = IndexPath(row: 0, section: 0) {
         didSet {
-            selectedFilterIndex = IndexPath(row: cites[selectedCityIndex.row].filterArray.count - 1, section: 0)
+            let coordinates = cites[selectedCityIndex.row].coordinates
+            selectedFilterIndex = IndexPath(row: 0, section: 0)
+            setupMapCamera(lat: coordinates.coordinate.latitude, lon: coordinates.coordinate.longitude, zoom: 11)
             cityCollectionView.reloadData()
         }
     }
-    private var selectedFilterIndex = IndexPath(row: 1, section: 0) {
+    private var selectedFilterIndex = IndexPath(row: 0, section: 0) {
         didSet {
             setupDisplayFacilitys()
             facilityTypeCollection.reloadData()
@@ -71,18 +73,22 @@ final class MapController: UIViewController {
     //MARK: -
     //MARK: UISetupFunctions
     private func setupInitialUI() {
-        let layout = UICollectionViewFlowLayout()
-        
-        layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-        cityCollectionView.collectionViewLayout = layout
-        //        facilityTypeCollection.collectionViewLayout = facilitysCollectionLayout
+        cityCollectionView.collectionViewLayout = createCollectionViewFlowLayout()
+        facilityTypeCollection.collectionViewLayout = createCollectionViewFlowLayout()
         topContainerView.layer.cornerRadius = 20
         topContainerView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         mapView.isMyLocationEnabled = true
         
         getDataUI(status: .sendRequest)
+    }
+    
+    private func createCollectionViewFlowLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        return layout
     }
     
     private func getDataUI(status: GetDataStatusType) {
@@ -140,15 +146,16 @@ final class MapController: UIViewController {
     }
     
     private func decodeData<T: BankFacility>(item: T, type: FacilityType) {
-        let facility = FacilityModel(type: type, id: item.id, city: item.city, coordinates: CLLocation(latitude: Double(item.gpsX) ?? 0.0, longitude: Double(item.gpsY) ?? 0.0))
+        let facilityCoordinates = CLLocation(latitude: Double(item.gpsX) ?? 0.0, longitude: Double(item.gpsY) ?? 0.0)
+        let facility = FacilityModel(type: type, id: item.id, city: item.city, coordinates: facilityCoordinates)
         
         self.facilites.append(facility)
-        self.getCites(city: facility.city, type: type)
+        self.getCites(city: facility.city, type: type, coordinates: facilityCoordinates)
     }
     
     //MARK: -
     //MARK: SetupCitesFunctions
-    private func getCites(city: String, type: FacilityType) {
+    private func getCites(city: String, type: FacilityType, coordinates: CLLocation) {
         if let index = self.cites.firstIndex(where: { $0.name == city }) {
             switch type {
                 case .atm: cites[index].atm = true
@@ -157,8 +164,8 @@ final class MapController: UIViewController {
             }
         } else {
             switch type {
-                case .atm: cites.append(CityModel(name: city, atm: true, department: false))
-                case .department: cites.append(CityModel(name: city, atm: false, department: true))
+                case .atm: cites.append(CityModel(name: city, atm: true, department: false, coordinates: coordinates))
+                case .department: cites.append(CityModel(name: city, atm: false, department: true, coordinates: coordinates))
                 default: break
             }
         }
@@ -179,7 +186,7 @@ final class MapController: UIViewController {
         guard let index = cites.firstIndex(where: { $0.name == nearestFacilityDistance.0 }) else { return }
         
         self.selectedCityIndex = IndexPath(row: index, section: 0)
-        self.cityCollectionView.scrollToItem(at: selectedCityIndex, at: .centeredHorizontally, animated: true)
+        self.cityCollectionView.scrollToItem(at: selectedCityIndex, at: .centeredHorizontally, animated: false)
     }
     
     //MARK: -
@@ -244,13 +251,14 @@ struct CityModel {
     var name: String
     var atm: Bool
     var department: Bool
+    var coordinates: CLLocation
     
     var filterArray: [FacilityType] {
         var filter = [FacilityType]()
         
         atm ? filter.append(FacilityType.atm) : nil
         department ? filter.append(FacilityType.department) : nil
-        filter.count == 2 ? filter.append(FacilityType.all) : nil
+        filter.count == 2 ? filter.insert(FacilityType.all, at: 0) : nil
         return filter
     }
 }
