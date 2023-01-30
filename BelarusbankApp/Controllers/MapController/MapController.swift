@@ -15,6 +15,7 @@ class MapController: UIViewController {
     private var clusterManager: GMUClusterManager!
     private var facilitys = [FacilityModel]()
     private var cites = [CityModel]()
+    private var nearestCiry: String?
     
     //MARK: -
     //MARK: IBOutlets
@@ -68,6 +69,7 @@ class MapController: UIViewController {
             for item in result {
                 self.decodeData(item: item, type: .atm)
             }
+            self.getNearestCity()
             self.getDataUI(status: .getResult)
         } failure: { errorString in
             print(errorString)
@@ -80,6 +82,7 @@ class MapController: UIViewController {
             for item in result {
                 self.decodeData(item: item, type: .department)
             }
+            self.getNearestCity()
             self.getDataUI(status: .getResult)
         } failure: { errorString in
             print(errorString)
@@ -88,11 +91,43 @@ class MapController: UIViewController {
     }
     
     private func decodeData<T: BankFacility>(item: T, type: FacilityType) {
-        let facility = FacilityModel(type: type, id: item.id, city: item.city, coordinates: CLLocationCoordinate2D(latitude: Double(item.gpsX) ?? 0.0, longitude: Double(item.gpsY) ?? 0.0))
+        let facility = FacilityModel(type: type, id: item.id, city: item.city, coordinates: CLLocation(latitude: Double(item.gpsX) ?? 0.0, longitude: Double(item.gpsY) ?? 0.0))
         
         self.facilitys.append(facility)
         
         self.clusterManager.add(FacilityMarker(facility: facility))
+    }
+    
+    private func getCites(city: String, type: FacilityType) {
+        if let index = self.cites.firstIndex(where: { $0.name == city }) {
+            switch type {
+                case .atm: cites[index].atm = true
+                case .department: cites[index].department = true
+                default: break
+            }
+        } else {
+            switch type {
+                case .atm: cites.append(CityModel(name: city, atm: true, department: false))
+                case .department: cites.append(CityModel(name: city, atm: false, department: true))
+                default: break
+            }
+        }
+        self.cites = cites.sorted { $0.name < $1.name }
+        getNearestCity()
+    }
+    
+    private func getNearestCity() {
+        guard let userLocation = locationManager.location else { return }
+        var nearestFacilityDistance: (FacilityModel, Double) = (facilitys[0], 700000)
+          
+        facilitys.forEach { facility in
+            let distance = userLocation.distance(from: facility.coordinates)
+            
+            if distance < nearestFacilityDistance.1 {
+                nearestFacilityDistance = (facility, distance)
+            }
+        }
+        self.nearestCiry = nearestFacilityDistance.0.city
     }
     
     private func setupMapCamera(lat: Double, lon: Double, zoom: Float) {
@@ -109,7 +144,7 @@ class FacilityMarker: GMSMarker {
     var facility: FacilityModel?
     
     convenience init(facility: FacilityModel) {
-        self.init(position: facility.coordinates)
+        self.init(position: CLLocationCoordinate2D(latitude: facility.coordinates.coordinate.latitude, longitude:  facility.coordinates.coordinate.longitude))
         self.facility = facility
         self.icon = facility.type.markerIcon
     }
@@ -122,7 +157,7 @@ struct FacilityModel {
     var type: FacilityType
     var id: String
     var city: String
-    var coordinates: CLLocationCoordinate2D
+    var coordinates: CLLocation
 }
 
 //MARK: -
