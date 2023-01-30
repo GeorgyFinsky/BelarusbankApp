@@ -204,6 +204,16 @@ final class MapController: UIViewController {
         mapView?.animate(to: camera)
     }
     
+    //MARK: -
+    //MARK: IBActions
+    @IBAction func reloadDataButtonDidTap(_ sender: Any) {
+        getDataUI(status: .sendRequest)
+        requestsResults = (false, false)
+        cites.removeAll()
+        facilites.removeAll()
+        getData()
+    }
+    
 }
 
 //MARK: -

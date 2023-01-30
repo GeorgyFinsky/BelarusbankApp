@@ -92,6 +92,9 @@
                                     <buttonConfiguration key="configuration" style="plain" image="goforward" catalog="system">
                                         <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </buttonConfiguration>
+                                    <connections>
+                                        <action selector="reloadDataButtonDidTap:" destination="-1" eventType="touchUpInside" id="fBP-c8-Gsq"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>
