@@ -9,5 +9,6 @@ import Foundation
 
 enum GetDataStatusType {
     case sendRequest
-    case getResult
+    case getSuccessResult
+    case getFailureResult
 }

@@ -15,8 +15,14 @@ class MapController: UIViewController {
     private var clusterManager: GMUClusterManager!
     private var facilitys = [FacilityModel]()
     private var cites = [CityModel]()
+    private var requestsStatus = (false, false) {
+        didSet {
+            requestsStatus == (true, true) ? self.getDataUI(status: .getSuccessResult) : nil
+        }
+    }
     private var selectedCity: CityModel? {
         didSet {
+            cityCollectionView.reloadData()
             facilityTypeCollection.reloadData()
         }
     }
@@ -29,6 +35,7 @@ class MapController: UIViewController {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var cityCollectionView: UICollectionView!
     @IBOutlet weak var facilityTypeCollection: UICollectionView!
+    @IBOutlet weak var collectionsContainer: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,24 +47,48 @@ class MapController: UIViewController {
         cityCollectionView.dataSource = self
         facilityTypeCollection.dataSource = self
         
+        registrCell()
         setupInitialUI()
         setupCluster()
         getData()
     }
     
+    private func registrCell() {
+        let filterCell = UINib(nibName: MapFilterCell.id, bundle: nil)
+        cityCollectionView.register(filterCell, forCellWithReuseIdentifier: MapFilterCell.id)
+        facilityTypeCollection.register(filterCell, forCellWithReuseIdentifier: MapFilterCell.id)
+    }
+    
     private func setupInitialUI() {
-        self.topContainerView.layer.cornerRadius = 20
-        self.topContainerView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        self.topContainerView.isUserInteractionEnabled = false
-        self.mapView.isMyLocationEnabled = true
+        let layout = UICollectionViewFlowLayout()
+        
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        cityCollectionView.collectionViewLayout = layout
+        topContainerView.layer.cornerRadius = 20
+        topContainerView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+//        self.topContainerView.isUserInteractionEnabled = false
+        mapView.isMyLocationEnabled = true
         
         getDataUI(status: .sendRequest)
     }
     
     private func getDataUI(status: GetDataStatusType) {
-        status == .sendRequest ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
-        reloadDataButton.isHidden = activityIndicator.isAnimating
-        activityIndicator.isHidden = !reloadDataButton.isHidden
+        switch status {
+            case .sendRequest:
+                self.activityIndicator.isHidden = false
+                self.collectionsContainer.alpha = 0
+            case .getFailureResult:
+                self.activityIndicator.isHidden = true
+            case .getSuccessResult:
+                self.clusterManager.cluster()
+                self.getNearestCity()
+                self.collectionsContainer.alpha = 1
+                self.activityIndicator.isHidden = true
+        }
+        self.activityIndicator.isHidden ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
+        self.reloadDataButton.isHidden = !self.activityIndicator.isHidden
     }
     
     private func setupCluster() {
@@ -68,7 +99,6 @@ class MapController: UIViewController {
         renderer.delegate = self
         clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
         clusterManager.setMapDelegate(self)
-        clusterManager.cluster()
     }
     
     private func getData() {
@@ -78,11 +108,10 @@ class MapController: UIViewController {
             for item in result {
                 self.decodeData(item: item, type: .atm)
             }
-            self.getNearestCity()
-            self.getDataUI(status: .getResult)
+            self.requestsStatus.0 = true
         } failure: { errorString in
             print(errorString)
-            self.getDataUI(status: .getResult)
+            self.getDataUI(status: .getFailureResult)
         }
         
         BankFacilityProvider().getDepartments { [weak self] result in
@@ -91,11 +120,10 @@ class MapController: UIViewController {
             for item in result {
                 self.decodeData(item: item, type: .department)
             }
-            self.getNearestCity()
-            self.getDataUI(status: .getResult)
+            self.requestsStatus.1 = true
         } failure: { errorString in
             print(errorString)
-            self.getDataUI(status: .getResult)
+            self.getDataUI(status: .getFailureResult)
         }
     }
     
@@ -103,7 +131,7 @@ class MapController: UIViewController {
         let facility = FacilityModel(type: type, id: item.id, city: item.city, coordinates: CLLocation(latitude: Double(item.gpsX) ?? 0.0, longitude: Double(item.gpsY) ?? 0.0))
         
         self.facilitys.append(facility)
-        
+        self.getCites(city: facility.city, type: type)
         self.clusterManager.add(FacilityMarker(facility: facility))
     }
     
@@ -121,14 +149,13 @@ class MapController: UIViewController {
                 default: break
             }
         }
-        self.cites = cites.sorted { $0.name < $1.name }
-        getNearestCity()
+        self.cites = cites.sorted(by: { $0.name < $1.name }).filter({ $0.name != ""})
     }
     
     private func getNearestCity() {
         guard let userLocation = locationManager.location else { return }
         var nearestFacilityDistance: (String, Double) = ("Минск", 700000)
-          
+        
         facilitys.forEach { facility in
             let distance = userLocation.distance(from: facility.coordinates)
             
@@ -177,7 +204,7 @@ struct CityModel {
     var department: Bool
     
     var filterArray: [String] {
-        var filter: [String]
+        var filter = [String]()
         if atm {
             filter.append(FacilityType.atm.rawValue)
         }
@@ -245,7 +272,18 @@ extension MapController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        if collectionView == cityCollectionView {
+            let filterCell = cityCollectionView.dequeueReusableCell(withReuseIdentifier: MapFilterCell.id, for: indexPath)
+            (filterCell as? MapFilterCell)?.set(value: cites[indexPath.row].name)
+            
+            return filterCell
+        } else {
+            let filterCell = facilityTypeCollection.dequeueReusableCell(withReuseIdentifier: MapFilterCell.id, for: indexPath)
+            guard let selectedCity else { return filterCell }
+            
+            (filterCell as? MapFilterCell)?.set(value: selectedCity.filterArray[indexPath.row])
+            return filterCell
+        }
     }
     
 }

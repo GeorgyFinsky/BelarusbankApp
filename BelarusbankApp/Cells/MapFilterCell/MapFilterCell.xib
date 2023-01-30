@@ -11,18 +11,18 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MapFilterCell" customModule="BelarusbankApp" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="441" height="200"/>
+            <rect key="frame" x="0.0" y="0.0" width="233" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="441" height="200"/>
+                <rect key="frame" x="0.0" y="0.0" width="233" height="50"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Idk-lp-wzq">
-                        <rect key="frame" x="0.0" y="0.0" width="441" height="200"/>
+                        <rect key="frame" x="0.0" y="0.0" width="233" height="50"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YwA-1o-t7X">
-                                <rect key="frame" x="192" y="86.333333333333329" width="57" height="27.666666666666671"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="23"/>
+                                <rect key="frame" x="10" y="11.999999999999998" width="213" height="26.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -30,9 +30,9 @@
                         <color key="backgroundColor" systemColor="systemGreenColor"/>
                         <constraints>
                             <constraint firstItem="YwA-1o-t7X" firstAttribute="centerX" secondItem="Idk-lp-wzq" secondAttribute="centerX" id="BCd-jg-vhf"/>
-                            <constraint firstItem="YwA-1o-t7X" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Idk-lp-wzq" secondAttribute="leading" constant="10" id="cv1-0N-NUv"/>
-                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YwA-1o-t7X" secondAttribute="trailing" constant="10" id="keV-wj-eGK"/>
+                            <constraint firstAttribute="trailing" secondItem="YwA-1o-t7X" secondAttribute="trailing" constant="10" id="HNc-dX-w4W"/>
                             <constraint firstItem="YwA-1o-t7X" firstAttribute="centerY" secondItem="Idk-lp-wzq" secondAttribute="centerY" id="oML-LF-HlF"/>
+                            <constraint firstItem="YwA-1o-t7X" firstAttribute="leading" secondItem="Idk-lp-wzq" secondAttribute="leading" constant="10" id="vdB-HN-eiz"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -41,15 +41,15 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="Idk-lp-wzq" secondAttribute="trailing" id="ae4-LH-efd"/>
                 <constraint firstItem="Idk-lp-wzq" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="bhx-zc-nAn"/>
-                <constraint firstAttribute="bottom" secondItem="Idk-lp-wzq" secondAttribute="bottom" id="qfk-yB-gOT"/>
+                <constraint firstAttribute="bottom" secondItem="Idk-lp-wzq" secondAttribute="bottom" id="e5P-XV-VBA"/>
                 <constraint firstItem="Idk-lp-wzq" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="xVg-f2-ZNU"/>
             </constraints>
-            <size key="customSize" width="441" height="200"/>
+            <size key="customSize" width="233" height="94"/>
             <connections>
                 <outlet property="containerView" destination="Idk-lp-wzq" id="L8Y-6y-Vui"/>
                 <outlet property="dataLabel" destination="YwA-1o-t7X" id="zI8-7R-DnY"/>
             </connections>
-            <point key="canvasLocation" x="260.30534351145036" y="72.535211267605632"/>
+            <point key="canvasLocation" x="3.8167938931297707" y="126.7605633802817"/>
         </collectionViewCell>
     </objects>
     <resources>

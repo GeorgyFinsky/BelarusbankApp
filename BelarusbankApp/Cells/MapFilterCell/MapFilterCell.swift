@@ -16,7 +16,7 @@ class MapFilterCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        containerView.layer.cornerRadius = (containerView.frame.height / 2)
+        containerView.layer.cornerRadius = 12
     }
     
     func set(value: String) {
