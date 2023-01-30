@@ -15,8 +15,11 @@ class MapController: UIViewController {
     private var clusterManager: GMUClusterManager!
     private var facilitys = [FacilityModel]()
     private var cites = [CityModel]()
-//    private var nearestCiry: CityModel?
-    private var selectedCity: CityModel?
+    private var selectedCity: CityModel? {
+        didSet {
+            facilityTypeCollection.reloadData()
+        }
+    }
     
     //MARK: -
     //MARK: IBOutlets
