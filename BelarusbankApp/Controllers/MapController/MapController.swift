@@ -30,16 +30,24 @@ class MapController: UIViewController {
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
         
-        setupUI()
+        setupInitialUI()
         setupCluster()
         getData()
     }
     
-    private func setupUI() {
+    private func setupInitialUI() {
         self.topContainerView.layer.cornerRadius = 20
         self.topContainerView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        
+        self.topContainerView.isUserInteractionEnabled = false
         self.mapView.isMyLocationEnabled = true
+        
+        getDataUI(status: .sendRequest)
+    }
+    
+    private func getDataUI(status: GetDataStatusType) {
+        status == .sendRequest ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
+        reloadDataButton.isHidden = activityIndicator.isAnimating
+        activityIndicator.isHidden = !reloadDataButton.isHidden
     }
     
     private func setupCluster() {
@@ -50,7 +58,7 @@ class MapController: UIViewController {
         renderer.delegate = self
         clusterManager = GMUClusterManager(map: mapView, algorithm: algorithm, renderer: renderer)
         clusterManager.setMapDelegate(self)
-//        clusterManager.cluster()
+        clusterManager.cluster()
     }
     
     private func getData() {
@@ -60,8 +68,10 @@ class MapController: UIViewController {
             for item in result {
                 self.decodeData(item: item, type: .atm)
             }
+            self.getDataUI(status: .getResult)
         } failure: { errorString in
             print(errorString)
+            self.getDataUI(status: .getResult)
         }
         
         BankFacilityProvider().getDepartments { [weak self] result in
@@ -70,8 +80,10 @@ class MapController: UIViewController {
             for item in result {
                 self.decodeData(item: item, type: .department)
             }
+            self.getDataUI(status: .getResult)
         } failure: { errorString in
             print(errorString)
+            self.getDataUI(status: .getResult)
         }
     }
     
@@ -81,7 +93,6 @@ class MapController: UIViewController {
         self.facilitys.append(facility)
         
         self.clusterManager.add(FacilityMarker(facility: facility))
-        self.clusterManager.cluster()
     }
     
     private func setupMapCamera(lat: Double, lon: Double, zoom: Float) {
