@@ -10,20 +10,25 @@ import GoogleMaps
 import GoogleMapsUtils
 import CoreLocation
 
-class MapController: UIViewController {
+final class MapController: UIViewController {
     private let locationManager = CLLocationManager()
     private var clusterManager: GMUClusterManager!
     private var facilites = [FacilityModel]()
-    private var displayFacilites = [FacilityModel]()
     private var cites = [CityModel]()
     private var requestsResults = (false, false) {
         didSet {
             requestsResults == (true, true) ? self.getDataUI(status: .getSuccessResult) : nil
         }
     }
-    private var selectedCity: (CityModel, IndexPath)? {
+    private var selectedCityIndex = IndexPath(row: 1, section: 0) {
         didSet {
+            selectedFilterIndex = IndexPath(row: cites[selectedCityIndex.row].filterArray.count - 1, section: 0)
             cityCollectionView.reloadData()
+        }
+    }
+    private var selectedFilterIndex = IndexPath(row: 1, section: 0) {
+        didSet {
+            setupDisplayFacilitys()
             facilityTypeCollection.reloadData()
         }
     }
@@ -46,7 +51,10 @@ class MapController: UIViewController {
         locationManager.startUpdatingLocation()
         
         cityCollectionView.dataSource = self
+        cityCollectionView.delegate = self
         facilityTypeCollection.dataSource = self
+        facilityTypeCollection.delegate = self
+        
         
         registrCell()
         setupInitialUI()
@@ -60,6 +68,8 @@ class MapController: UIViewController {
         facilityTypeCollection.register(filterCell, forCellWithReuseIdentifier: MapFilterCell.id)
     }
     
+    //MARK: -
+    //MARK: UISetupFunctions
     private func setupInitialUI() {
         let layout = UICollectionViewFlowLayout()
         
@@ -67,7 +77,7 @@ class MapController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         cityCollectionView.collectionViewLayout = layout
-//        facilityTypeCollection.collectionViewLayout = facilitysCollectionLayout
+        //        facilityTypeCollection.collectionViewLayout = facilitysCollectionLayout
         topContainerView.layer.cornerRadius = 20
         topContainerView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         mapView.isMyLocationEnabled = true
@@ -83,13 +93,12 @@ class MapController: UIViewController {
             case .getFailureResult:
                 self.activityIndicator.isHidden = true
             case .getSuccessResult:
-                self.clusterManager.cluster()
                 self.getNearestCity()
                 self.collectionsContainer.alpha = 1
                 self.activityIndicator.isHidden = true
         }
-        self.activityIndicator.isHidden ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
-        self.reloadDataButton.isHidden = !self.activityIndicator.isHidden
+        activityIndicator.isHidden ? activityIndicator.stopAnimating() : activityIndicator.startAnimating()
+        reloadDataButton.isHidden = !self.activityIndicator.isHidden
     }
     
     private func setupCluster() {
@@ -102,6 +111,8 @@ class MapController: UIViewController {
         clusterManager.setMapDelegate(self)
     }
     
+    //MARK: -
+    //MARK: DataRequestFunctions
     private func getData() {
         BankFacilityProvider().getATMs { [weak self] result in
             guard let self else { return }
@@ -133,9 +144,10 @@ class MapController: UIViewController {
         
         self.facilites.append(facility)
         self.getCites(city: facility.city, type: type)
-        self.clusterManager.add(FacilityMarker(facility: facility))
     }
     
+    //MARK: -
+    //MARK: SetupCitesFunctions
     private func getCites(city: String, type: FacilityType) {
         if let index = self.cites.firstIndex(where: { $0.name == city }) {
             switch type {
@@ -165,7 +177,25 @@ class MapController: UIViewController {
             }
         }
         guard let index = cites.firstIndex(where: { $0.name == nearestFacilityDistance.0 }) else { return }
-        self.selectedCity = (cites[index], IndexPath(row: index, section: 0))
+        
+        self.selectedCityIndex = IndexPath(row: index, section: 0)
+        self.cityCollectionView.scrollToItem(at: selectedCityIndex, at: .centeredHorizontally, animated: true)
+    }
+    
+    //MARK: -
+    //MARK: MapFunctions
+    private func setupDisplayFacilitys() {
+        let city = cites[selectedCityIndex.row]
+        let facilityFilter = city.filterArray[selectedFilterIndex.row]
+        var displayFacilites = [FacilityModel]()
+        
+        displayFacilites = facilites.filter({ $0.city == city.name })
+        if facilityFilter != .all, city.filterArray.count != 1 {
+            displayFacilites = displayFacilites.filter({ $0.type == facilityFilter })
+        }
+        clusterManager.clearItems()
+        displayFacilites.forEach({ self.clusterManager.add(FacilityMarker(facility: $0)) })
+        clusterManager.cluster()
     }
     
     private func setupMapCamera(lat: Double, lon: Double, zoom: Float) {
@@ -178,7 +208,7 @@ class MapController: UIViewController {
 
 //MARK: -
 //MARK: FacilityMarker
-class FacilityMarker: GMSMarker {
+final class FacilityMarker: GMSMarker {
     var facility: FacilityModel?
     
     convenience init(facility: FacilityModel) {
@@ -205,12 +235,12 @@ struct CityModel {
     var atm: Bool
     var department: Bool
     
-    var filterArray: [String] {
-        var filter = [String]()
+    var filterArray: [FacilityType] {
+        var filter = [FacilityType]()
         
-        atm ? filter.append(FacilityType.atm.rawValue) : nil
-        department ? filter.append(FacilityType.atm.rawValue) : nil
-        filter.count == 2 ? filter.append(FacilityType.all.rawValue) : nil
+        atm ? filter.append(FacilityType.atm) : nil
+        department ? filter.append(FacilityType.department) : nil
+        filter.count == 2 ? filter.append(FacilityType.all) : nil
         return filter
     }
 }
@@ -223,7 +253,7 @@ extension MapController: CLLocationManagerDelegate {
         guard let userLocation = manager.location?.coordinate else { return }
         
         self.locationManager.stopUpdatingLocation()
-        setupMapCamera(lat: userLocation.latitude, lon: userLocation.longitude, zoom: 12)
+        setupMapCamera(lat: userLocation.latitude, lon: userLocation.longitude, zoom: 11)
     }
     
 }
@@ -264,23 +294,36 @@ extension MapController: UICollectionViewDataSource {
         if collectionView == cityCollectionView {
             return cites.count
         } else {
-            return selectedCity?.0.filterArray.count ?? 0
+            return cites.count != 0 ? cites[selectedCityIndex.row].filterArray.count : 0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == cityCollectionView {
             let filterCell = cityCollectionView.dequeueReusableCell(withReuseIdentifier: MapFilterCell.id, for: indexPath)
-            filterCell.isSelected = selectedCity?.1 == indexPath
+            filterCell.isSelected = selectedCityIndex == indexPath
             (filterCell as? MapFilterCell)?.set(value: cites[indexPath.row].name)
             
             return filterCell
         } else {
             let filterCell = facilityTypeCollection.dequeueReusableCell(withReuseIdentifier: MapFilterCell.id, for: indexPath)
-            guard let selectedCity else { return filterCell }
-            
-            (filterCell as? MapFilterCell)?.set(value: selectedCity.0.filterArray[indexPath.row])
+            filterCell.isSelected = selectedFilterIndex == indexPath
+            (filterCell as? MapFilterCell)?.set(value: cites[selectedCityIndex.row].filterArray[indexPath.row].rawValue)
             return filterCell
+        }
+    }
+    
+}
+
+//MARK: -
+//MARK: UICollectionViewDelegate
+extension MapController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == cityCollectionView {
+            selectedCityIndex = indexPath
+        } else {
+            selectedFilterIndex = indexPath
         }
     }
     
