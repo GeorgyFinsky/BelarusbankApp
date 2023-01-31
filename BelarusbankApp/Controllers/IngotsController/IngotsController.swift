@@ -12,6 +12,8 @@ class IngotsController: UIViewController {
     private var tableData = [DepartmentIngots]()
     private var segmentControlData = IngotType.allCases
     
+    //MARK: -
+    //MARK: IBOutlets
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
     
@@ -84,6 +86,8 @@ class IngotsController: UIViewController {
     
 }
 
+//MARK: -
+//MARK: UITableViewDataSource
 extension IngotsController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -98,11 +102,15 @@ extension IngotsController: UITableViewDataSource {
     
 }
 
+//MARK: -
+//MARK: DepartmentIngotsModel
 struct DepartmentIngots {
     var departmentID: String
     var ingotsPrices: [IngotPriceModel]
 }
 
+//MARK: -
+//MARK: IngotPriceModel
 struct IngotPriceModel {
     var type: IngotType
     var pricePer10gr: String

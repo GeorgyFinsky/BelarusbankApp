@@ -25,7 +25,7 @@ struct GemModel: Decodable {
         case price = "cost"
         case filialID = "filial_id"
     }
-
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         attestatID = try container.decode(String.self, forKey: .attestatID)

@@ -31,7 +31,7 @@ struct IngotModel: Decodable {
         case platinum50SellPrice = "PL_50_out"
         case filialID = "filial_id"
     }
-
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         gold10SellPrice = try container.decode(String.self, forKey: .gold10SellPrice)
