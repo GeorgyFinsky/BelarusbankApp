@@ -16,6 +16,7 @@ final class IngotsController: UIViewController {
     //MARK: IBOutlets
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var outOfStockLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +75,10 @@ final class IngotsController: UIViewController {
         tableData.removeAll()
         departmentsIngot.forEach { department in
             if let index = department.ingotsPrices.firstIndex(where: { $0.type == segmentControlData[selectedSegmentIndex]}) {
+                self.outOfStockLabel.alpha = 0
                 self.tableData.append(DepartmentIngots(departmentID: department.departmentID, ingotsPrices: department.ingotsPrices.enumerated().filter({ $0.offset == index }).map({ $0.element })))
+            } else {
+                self.outOfStockLabel.alpha = 1
             }
         }
         tableView.reloadData()

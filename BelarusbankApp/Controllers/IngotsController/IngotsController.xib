@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="IngotsController" customModule="BelarusbankApp" customModuleProvider="target">
             <connections>
+                <outlet property="outOfStockLabel" destination="nxy-B3-JDR" id="yer-HJ-4hk"/>
                 <outlet property="segmentControl" destination="4ng-ec-crX" id="gBu-b2-sIU"/>
                 <outlet property="tableView" destination="Vsn-6z-TZU" id="co4-rO-NHF"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -32,17 +33,25 @@
                     <rect key="frame" x="0.0" y="100" width="393" height="718"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Нет в продаже" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nxy-B3-JDR">
+                    <rect key="frame" x="128.66666666666669" y="426.66666666666669" width="135.66666666666669" height="24"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Vsn-6z-TZU" secondAttribute="bottom" id="Chf-ep-MC1"/>
+                <constraint firstItem="nxy-B3-JDR" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="F8o-ub-DQP"/>
                 <constraint firstItem="Vsn-6z-TZU" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Nkq-k1-Oq2"/>
                 <constraint firstItem="4ng-ec-crX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="P5j-dG-6dy"/>
                 <constraint firstItem="4ng-ec-crX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="caZ-OZ-Jlf"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4ng-ec-crX" secondAttribute="trailing" constant="16" id="ipP-cp-GE7"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Vsn-6z-TZU" secondAttribute="trailing" id="kGS-Pw-iTj"/>
                 <constraint firstItem="Vsn-6z-TZU" firstAttribute="top" secondItem="4ng-ec-crX" secondAttribute="bottom" constant="10" id="liZ-4w-TwL"/>
+                <constraint firstItem="nxy-B3-JDR" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="zdM-tT-6fY"/>
             </constraints>
             <point key="canvasLocation" x="-37" y="20"/>
         </view>
