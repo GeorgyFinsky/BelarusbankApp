@@ -8,14 +8,6 @@
 import Foundation
 import RealmSwift
 
-enum RequestTupe: String, PersistableEnum {
-    case atms
-    case departments
-    case gems
-    case ingots
-    case news
-}
-
 class RequestRealmModel: Object {
     @Persisted var code = 2
     @Persisted var time = Date()
