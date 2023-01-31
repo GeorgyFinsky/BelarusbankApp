@@ -29,7 +29,7 @@
                     </segments>
                 </segmentedControl>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Vsn-6z-TZU">
-                    <rect key="frame" x="0.0" y="90" width="393" height="728"/>
+                    <rect key="frame" x="0.0" y="100" width="393" height="718"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
             </subviews>
@@ -42,7 +42,7 @@
                 <constraint firstItem="4ng-ec-crX" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="caZ-OZ-Jlf"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4ng-ec-crX" secondAttribute="trailing" constant="16" id="ipP-cp-GE7"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Vsn-6z-TZU" secondAttribute="trailing" id="kGS-Pw-iTj"/>
-                <constraint firstItem="Vsn-6z-TZU" firstAttribute="top" secondItem="4ng-ec-crX" secondAttribute="bottom" id="liZ-4w-TwL"/>
+                <constraint firstItem="Vsn-6z-TZU" firstAttribute="top" secondItem="4ng-ec-crX" secondAttribute="bottom" constant="10" id="liZ-4w-TwL"/>
             </constraints>
             <point key="canvasLocation" x="-37" y="20"/>
         </view>
