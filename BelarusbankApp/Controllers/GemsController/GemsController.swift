@@ -8,7 +8,12 @@
 import UIKit
 
 class GemsController: UIViewController {
-    
+    private var gems = [GemModel]()
+    private var filtredGems = [GemModel]() {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var filterPopUpButton: UIButton!
@@ -16,10 +21,65 @@ class GemsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.tableView.dataSource = self
+        
+        registrCell()
+        getData()
+        setupFilterButton()
     }
+    
+    private func registrCell() {
+        let gemCell = UINib(nibName: GemCell.id, bundle: nil)
+        tableView.register(gemCell, forCellReuseIdentifier: GemCell.id)
+    }
+    
+    private func setupFilterButton() {
+        let selectionClosure = {(action: UIAction) in
+            switch action.title {
+                case FilterType.priceFromLow.rawValue:
+                    self.filtredGems = self.gems.sorted { $0.price < $1.price }
+                case FilterType.priceFromHigh.rawValue:
+                    self.filtredGems = self.gems.sorted { $0.price > $1.price }
+                case FilterType.weightFromLow.rawValue:
+                    self.filtredGems = self.gems.sorted { $0.weight < $1.weight }
+                case FilterType.weightFromHight.rawValue:
+                    self.filtredGems = self.gems.sorted { $0.weight > $1.weight }
+                default: break
+            }
+        }
+        
+        filterPopUpButton.menu = UIMenu(children: [
+            UIAction(title: GemFilterType.priceFromLow.rawValue, state: .on, handler: selectionClosure),
+            UIAction(title: GemFilterType.priceFromHigh.rawValue, handler: selectionClosure),
+            UIAction(title: GemFilterType.weightFromLow.rawValue, handler: selectionClosure),
+            UIAction(title: GemFilterType.weightFromHight.rawValue, handler: selectionClosure)
+        ])
+        filterPopUpButton.showsMenuAsPrimaryAction = true
+        filterPopUpButton.changesSelectionAsPrimaryAction = true
+    }
+    
+    private func getData() {
+        BankFacilityProvider().getGems { [weak self] result in
+            guard let self else { return }
+            self.gems = result
+            self.filtredGems = self.gems.sorted { $0.price < $1.price }
+        } failure: { errorString in
+            print(errorString)
+        }
+    }
+    
+}
 
-
-   
-
+extension GemsController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filtredGems.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let gemCell = tableView.dequeueReusableCell(withIdentifier: GemCell.id, for: indexPath)
+        (gemCell as? GemCell)?.set(gem: filtredGems[indexPath.row])
+        return gemCell
+    }
+    
 }
