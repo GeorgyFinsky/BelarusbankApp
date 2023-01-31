@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import SDWebImage
+//import SDWebImage
 
 class NewsCell: UITableViewCell {
     static let id = String(describing: NewsCell.self)
@@ -23,7 +23,7 @@ class NewsCell: UITableViewCell {
     func set(news: NewsModel) {
         self.titleLabel.text = news.title
         self.dateLabel.text = news.date
-        self.newsImageView.sd_setImage(with: URL(string: news.imageUrl))
+//        self.newsImageView.sd_setImage(with: URL(string: news.imageUrl))
     }
     
 }
