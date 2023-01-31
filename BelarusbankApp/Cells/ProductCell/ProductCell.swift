@@ -28,7 +28,11 @@ class ProductCell: UITableViewCell {
         self.info3Label.text = ("Цена: \(gem.price) BYN")
     }
     
-    
-    
+    func set(ingot: DepartmentIngots) {
+        self.departmentIDLabel.text = "Отделение №\(ingot.departmentID)"
+        self.info1Label.text = "10 гр - \(ingot.ingotsPrices[0].pricePer10gr) BYN"
+        self.info2Label.text = "20 гр - \(ingot.ingotsPrices[0].pricePer20gr) BYN"
+        self.info3Label.text = "50 гр - \(ingot.ingotsPrices[0].pricePer50gr) BYN"
+    }
     
 }
