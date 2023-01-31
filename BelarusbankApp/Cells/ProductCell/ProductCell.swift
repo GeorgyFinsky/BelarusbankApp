@@ -8,16 +8,19 @@
 import UIKit
 
 class ProductCell: UITableViewCell {
-
+    
+    
+    
+    @IBOutlet weak var departmentIDLabel: UILabel!
+    @IBOutlet weak var info1Label: UILabel!
+    @IBOutlet weak var info2Label: UILabel!
+    @IBOutlet weak var info3Label: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+    
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
 }

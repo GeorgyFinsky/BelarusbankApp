@@ -10,23 +10,74 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="183" id="KGk-i7-Jjw" customClass="ProductCell" customModule="BelarusbankApp" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="471" height="183"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="270" id="KGk-i7-Jjw" customClass="ProductCell" customModule="BelarusbankApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="471" height="270"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="471" height="183"/>
+                <rect key="frame" x="0.0" y="0.0" width="471" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Iqg-rk-P6P">
-                        <rect key="frame" x="115" y="27" width="240" height="128"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iqg-rk-P6P">
+                        <rect key="frame" x="0.0" y="5" width="471" height="260"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eC3-iZ-QBM">
+                                <rect key="frame" x="10" y="16" width="451" height="24"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="HkB-Zg-H7t">
+                                <rect key="frame" x="10" y="50" width="451" height="200"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S96-Zx-yK9">
+                                        <rect key="frame" x="0.0" y="0.0" width="48" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zeO-XG-fY3">
+                                        <rect key="frame" x="0.0" y="88" width="48" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P9O-nI-CQQ">
+                                        <rect key="frame" x="0.0" y="176" width="48" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="HkB-Zg-H7t" firstAttribute="top" secondItem="eC3-iZ-QBM" secondAttribute="bottom" constant="10" id="Kfa-jW-ccv"/>
+                            <constraint firstAttribute="bottom" secondItem="HkB-Zg-H7t" secondAttribute="bottom" constant="10" id="UJ6-ns-qp1"/>
+                            <constraint firstItem="eC3-iZ-QBM" firstAttribute="leading" secondItem="Iqg-rk-P6P" secondAttribute="leading" constant="10" id="Us0-nb-KhF"/>
+                            <constraint firstItem="eC3-iZ-QBM" firstAttribute="top" secondItem="Iqg-rk-P6P" secondAttribute="top" constant="16" id="XCb-8d-LYa"/>
+                            <constraint firstItem="HkB-Zg-H7t" firstAttribute="leading" secondItem="Iqg-rk-P6P" secondAttribute="leading" constant="10" id="mff-5v-yiA"/>
+                            <constraint firstAttribute="trailing" secondItem="HkB-Zg-H7t" secondAttribute="trailing" constant="10" id="ooq-QN-Wgs"/>
+                            <constraint firstAttribute="trailing" secondItem="eC3-iZ-QBM" secondAttribute="trailing" constant="10" id="zVo-WM-ji7"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="Iqg-rk-P6P" secondAttribute="bottom" constant="5" id="6rd-IM-lcC"/>
+                    <constraint firstItem="Iqg-rk-P6P" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="CHa-4h-yJO"/>
+                    <constraint firstAttribute="trailing" secondItem="Iqg-rk-P6P" secondAttribute="trailing" id="YPN-KC-fwd"/>
+                    <constraint firstItem="Iqg-rk-P6P" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="v8y-tb-qId"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
-            <point key="canvasLocation" x="77.099236641221367" y="68.661971830985919"/>
+            <connections>
+                <outlet property="departmentIDLabel" destination="eC3-iZ-QBM" id="Maz-A1-XIw"/>
+                <outlet property="info1Label" destination="S96-Zx-yK9" id="03J-Fa-t0f"/>
+                <outlet property="info2Label" destination="zeO-XG-fY3" id="Kg7-jz-iAl"/>
+                <outlet property="info3Label" destination="P9O-nI-CQQ" id="m9G-hq-ooE"/>
+            </connections>
+            <point key="canvasLocation" x="77.099236641221367" y="99.295774647887328"/>
         </tableViewCell>
     </objects>
     <resources>
