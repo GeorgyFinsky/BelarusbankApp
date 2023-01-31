@@ -18,9 +18,21 @@ class IngotsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        setupSegmentControl()
     }
-
+    
+    private func setupSegmentControl() {
+        segmentControlData.forEach { type in
+            self.segmentControl.setTitle(type.title, forSegmentAt: type.rawValue)
+        }
+        segmentControl.addTarget(self, action: #selector(self.segmentedValueChanged(_:)), for: .valueChanged)
+        segmentControl.color
+        segmentControl.selectedSegmentIndex = 0
+    }
+    
+    @objc func segmentedValueChanged(_ sender:UISegmentedControl!) {
+        setupTableData(selectedSegmentIndex: sender.selectedSegmentIndex)
+    }
 
 }
 
@@ -31,8 +43,8 @@ extension IngotsController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let bullonCell = tableView.dequeueReusableCell(withIdentifier: BullonCell.id, for: indexPath)
-        (bullonCell as? BullonCell)?.set(bullon: tableData[indexPath.row])
+        let bullonCell = tableView.dequeueReusableCell(withIdentifier: ProductCell.id, for: indexPath)
+        (bullonCell as? ProductCell)?.set(bullon: tableData[indexPath.row])
         return bullonCell
     }
     
