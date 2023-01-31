@@ -22,6 +22,13 @@ final class SettingsController: UIViewController {
         registerCell()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.requests = RealmManager().read()
+        self.tableView.reloadData()
+    }
+    
     private func registerCell() {
         let requestCell = UINib(nibName: RequestsTableCell.id, bundle: nil)
         tableView.register(requestCell, forCellReuseIdentifier: RequestsTableCell.id)
