@@ -17,9 +17,9 @@ class NewsCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-       
+        
     }
-
+    
     func set(news: NewsModel) {
         self.titleLabel.text = news.title
         self.dateLabel.text = news.date
