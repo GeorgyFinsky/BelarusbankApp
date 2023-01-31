@@ -13,7 +13,6 @@ class FullNewsController: UIViewController {
     @IBOutlet weak var newsTitleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var newsTextView: UITextView!
-    @IBOutlet weak var newsImageView: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
