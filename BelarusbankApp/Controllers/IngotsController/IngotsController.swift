@@ -32,8 +32,39 @@ class IngotsController: UIViewController {
             self.segmentControl.setTitle(type.title, forSegmentAt: type.rawValue)
         }
         segmentControl.addTarget(self, action: #selector(self.segmentedValueChanged(_:)), for: .valueChanged)
-        segmentControl.color
         segmentControl.selectedSegmentIndex = 0
+    }
+    
+    private func getData() {
+        BankFacilityProvider().getIngots { [weak self] result in
+            guard let self else { return }
+            
+            for item in result {
+                let goldIngots = IngotPriceModel(type: .gold,
+                                                 pricePer10gr: item.gold10SellPrice,
+                                                 pricePer20gr: item.gold20SellPrice,
+                                                 pricePer50gr: item.gold50SellPrice)
+                let silverIngots = IngotPriceModel(type: .silver,
+                                                   pricePer10gr: item.silver10SellPrice,
+                                                   pricePer20gr: item.silver20SellPrice,
+                                                   pricePer50gr: item.silver50SellPrice)
+                let platinumIngots = IngotPriceModel(type: .platinum,
+                                                     pricePer10gr: item.platinum10SellPrice,
+                                                     pricePer20gr: item.platinum20SellPrice,
+                                                     pricePer50gr: item.platinum50SellPrice)
+                
+                var enabledIngots = [goldIngots, silverIngots, platinumIngots]
+                if let enabledIngots = enabledIngots.filter { $0.inSale() } {
+                    self.departmentsIngot.append(DepartmentIngots(departmentID: item.filialId, ingotsPrices: enabledIngots))
+                }
+//                if enabledIngots.count != 0 {
+//                    self.departmentsIngot.append(DepartmentIngots(departmentID: item.filialId, ingotsPrices: enabledIngots))
+//                }
+            }
+            self.setupTableData(selectedSegmentIndex: 0)
+        } failure: { errorString in
+            print(errorString)
+        }
     }
     
     @objc func segmentedValueChanged(_ sender:UISegmentedControl!) {
@@ -49,9 +80,9 @@ extension IngotsController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let bullonCell = tableView.dequeueReusableCell(withIdentifier: ProductCell.id, for: indexPath)
-        (bullonCell as? ProductCell)?.set(bullon: tableData[indexPath.row])
-        return bullonCell
+        let ingotCell = tableView.dequeueReusableCell(withIdentifier: ProductCell.id, for: indexPath)
+        (ingotCell as? ProductCell)?.set(ingot: tableData[indexPath.row])
+        return ingotCell
     }
     
 }
