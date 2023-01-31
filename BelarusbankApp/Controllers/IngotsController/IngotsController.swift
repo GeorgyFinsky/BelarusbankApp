@@ -17,8 +17,11 @@ class IngotsController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        tableView.dataSource = self
+        
         registerCell()
+        getData()
         setupSegmentControl()
     }
     
@@ -54,12 +57,10 @@ class IngotsController: UIViewController {
                                                      pricePer50gr: item.platinum50SellPrice)
                 
                 var enabledIngots = [goldIngots, silverIngots, platinumIngots]
-                if let enabledIngots = enabledIngots.filter { $0.inSale() } {
-                    self.departmentsIngot.append(DepartmentIngots(departmentID: item.filialId, ingotsPrices: enabledIngots))
+                enabledIngots = enabledIngots.filter { $0.inSale() }
+                if enabledIngots.count != 0 {
+                    self.departmentsIngot.append(DepartmentIngots(departmentID: item.filialID, ingotsPrices: enabledIngots))
                 }
-//                if enabledIngots.count != 0 {
-//                    self.departmentsIngot.append(DepartmentIngots(departmentID: item.filialId, ingotsPrices: enabledIngots))
-//                }
             }
             self.setupTableData(selectedSegmentIndex: 0)
         } failure: { errorString in
@@ -67,10 +68,20 @@ class IngotsController: UIViewController {
         }
     }
     
+    private func setupTableData(selectedSegmentIndex: Int) {
+        tableData.removeAll()
+        departmentsIngot.forEach { department in
+            if let index = department.ingotsPrices.firstIndex(where: { $0.type == segmentControlData[selectedSegmentIndex]}) {
+                self.tableData.append(DepartmentIngots(departmentID: department.departmentID, ingotsPrices: department.ingotsPrices.enumerated().filter({ $0.offset == index }).map({ $0.element })))
+            }
+        }
+        tableView.reloadData()
+    }
+    
     @objc func segmentedValueChanged(_ sender:UISegmentedControl!) {
         setupTableData(selectedSegmentIndex: sender.selectedSegmentIndex)
     }
-
+    
 }
 
 extension IngotsController: UITableViewDataSource {
