@@ -22,7 +22,7 @@ class TabbarController: UITabBarController {
         let mapVC = MapController(nibName: String(describing: MapController.self), bundle: nil)
         let gemsVC = GemsController(nibName: String(describing: GemsController.self), bundle: nil)
         let ingotsVC = IngotsController(nibName: String(describing: IngotsController.self), bundle: nil)
-        let newsVC = NewsController(nibName: String(describing: NewsController.self), bundle: nil)
+        let newsVC = UINavigationController(rootViewController: NewsController(nibName: String(describing: NewsController.self), bundle: nil))
         let settingsVC = SettingsController(nibName: String(describing: SettingsController.self), bundle: nil)
         
         self.viewControllers = [mapVC, gemsVC, ingotsVC, newsVC, settingsVC]
