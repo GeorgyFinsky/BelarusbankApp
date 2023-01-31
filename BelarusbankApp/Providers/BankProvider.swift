@@ -63,7 +63,7 @@ final class BankFacilityProvider {
         }
     }
     
-    func GetNews(success: @escaping ArrayResponce<NewsModel>, failure: @escaping Error) {
+    func getNews(success: @escaping ArrayResponce<NewsModel>, failure: @escaping Error) {
         provider.request(.getNews) { result in
             switch result {
                 case .success(let responce):
