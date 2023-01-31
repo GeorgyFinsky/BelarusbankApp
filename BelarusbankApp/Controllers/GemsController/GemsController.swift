@@ -15,12 +15,14 @@ class GemsController: UIViewController {
         }
     }
     
+    //MARK: -
+    //MARK: IBOutlets
+    @IBOutlet weak var filterTypePopUpButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var filterPopUpButton: UIButton!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.tableView.dataSource = self
         
         registrCell()
@@ -29,8 +31,8 @@ class GemsController: UIViewController {
     }
     
     private func registrCell() {
-        let gemCell = UINib(nibName: GemCell.id, bundle: nil)
-        tableView.register(gemCell, forCellReuseIdentifier: GemCell.id)
+        let gemCell = UINib(nibName: ProductCell.id, bundle: nil)
+        tableView.register(gemCell, forCellReuseIdentifier: ProductCell.id)
     }
     
     private func setupFilterButton() {
@@ -48,14 +50,14 @@ class GemsController: UIViewController {
             }
         }
         
-        filterPopUpButton.menu = UIMenu(children: [
-            UIAction(title: GemFilterType.priceFromLow.rawValue, state: .on, handler: selectionClosure),
-            UIAction(title: GemFilterType.priceFromHigh.rawValue, handler: selectionClosure),
-            UIAction(title: GemFilterType.weightFromLow.rawValue, handler: selectionClosure),
-            UIAction(title: GemFilterType.weightFromHight.rawValue, handler: selectionClosure)
+        filterTypePopUpButton.menu = UIMenu(children: [
+            UIAction(title: FilterType.priceFromLow.rawValue, state: .on, handler: selectionClosure),
+            UIAction(title: FilterType.priceFromHigh.rawValue, handler: selectionClosure),
+            UIAction(title: FilterType.weightFromLow.rawValue, handler: selectionClosure),
+            UIAction(title: FilterType.weightFromHight.rawValue, handler: selectionClosure)
         ])
-        filterPopUpButton.showsMenuAsPrimaryAction = true
-        filterPopUpButton.changesSelectionAsPrimaryAction = true
+        filterTypePopUpButton.showsMenuAsPrimaryAction = true
+        filterTypePopUpButton.changesSelectionAsPrimaryAction = true
     }
     
     private func getData() {
@@ -70,6 +72,8 @@ class GemsController: UIViewController {
     
 }
 
+//MARK: -
+//MARK: UITableViewDataSource
 extension GemsController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -77,8 +81,8 @@ extension GemsController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let gemCell = tableView.dequeueReusableCell(withIdentifier: GemCell.id, for: indexPath)
-        (gemCell as? GemCell)?.set(gem: filtredGems[indexPath.row])
+        let gemCell = tableView.dequeueReusableCell(withIdentifier: ProductCell.id, for: indexPath)
+        (gemCell as? ProductCell)?.set(gem: filtredGems[indexPath.row])
         return gemCell
     }
     

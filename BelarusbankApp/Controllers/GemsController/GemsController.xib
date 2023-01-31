@@ -11,8 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GemsController" customModule="BelarusbankApp" customModuleProvider="target">
             <connections>
-                <outlet property="filterPopUpButton" destination="V9F-nD-J9i" id="qVo-NB-hsf"/>
-                <outlet property="tableView" destination="PzE-MO-ozI" id="Esq-4J-bTM"/>
+                <outlet property="filterTypePopUpButton" destination="3e7-Tz-5OR" id="m0M-rJ-IgE"/>
+                <outlet property="tableView" destination="PzE-MO-ozI" id="hjo-2u-ZFo"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,34 +21,34 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nOx-SS-0sc">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PzE-MO-ozI">
+                    <rect key="frame" x="10" y="125" width="373" height="693"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3e7-Tz-5OR">
                     <rect key="frame" x="321" y="79" width="52" height="36"/>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <menu key="menu" id="V9F-nD-J9i">
+                    <menu key="menu" id="mCO-wz-5hh">
                         <children>
-                            <command title="Item 1" id="0Ng-7u-4yU"/>
-                            <command title="Item 2" id="gA7-R5-ntw"/>
-                            <command title="Item 3" id="RTQ-tu-gB7"/>
-                            <command title="Item 4" id="ysG-xH-XNd"/>
+                            <command title="Item 1" id="wlb-xJ-hcL"/>
+                            <command title="Item 1" id="BWu-9X-Snx"/>
+                            <command title="Item 1" id="j5g-ge-xnX"/>
+                            <command title="Item 2" id="ZDM-Ea-wr9"/>
                         </children>
                     </menu>
                     <state key="normal" title="Button">
                         <color key="titleColor" systemColor="labelColor"/>
                     </state>
                 </button>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PzE-MO-ozI">
-                    <rect key="frame" x="10" y="135" width="373" height="683"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="PzE-MO-ozI" secondAttribute="bottom" id="8Ri-vB-84Y"/>
-                <constraint firstItem="nOx-SS-0sc" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="DjT-jb-Tzc"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="nOx-SS-0sc" secondAttribute="trailing" constant="20" id="Juo-tR-zGs"/>
-                <constraint firstItem="PzE-MO-ozI" firstAttribute="top" secondItem="nOx-SS-0sc" secondAttribute="bottom" constant="20" id="L5X-jw-Ner"/>
+                <constraint firstItem="3e7-Tz-5OR" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="Egu-lO-5pZ"/>
+                <constraint firstItem="PzE-MO-ozI" firstAttribute="top" secondItem="3e7-Tz-5OR" secondAttribute="bottom" constant="10" id="KZ4-ap-GDw"/>
                 <constraint firstItem="PzE-MO-ozI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="TfZ-lB-zmg"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="3e7-Tz-5OR" secondAttribute="trailing" constant="20" id="Vc4-gP-lLn"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PzE-MO-ozI" secondAttribute="trailing" constant="10" id="lNO-Ga-VxY"/>
             </constraints>
             <point key="canvasLocation" x="-37.404580152671755" y="19.718309859154932"/>
