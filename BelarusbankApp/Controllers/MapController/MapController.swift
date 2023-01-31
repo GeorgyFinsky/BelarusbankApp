@@ -49,14 +49,11 @@ final class MapController: UIViewController {
         super.viewDidLoad()
         
         locationManager.requestWhenInUseAuthorization()
-        locationManager.delegate = self
-        locationManager.startUpdatingLocation()
         
         cityCollectionView.dataSource = self
         cityCollectionView.delegate = self
         facilityTypeCollection.dataSource = self
         facilityTypeCollection.delegate = self
-        
         
         registrCell()
         setupInitialUI()
@@ -261,19 +258,6 @@ struct CityModel {
         filter.count == 2 ? filter.insert(FacilityType.all, at: 0) : nil
         return filter
     }
-}
-
-//MARK: -
-//MARK: CLLocationManagerDelegate
-extension MapController: CLLocationManagerDelegate {
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let userLocation = manager.location?.coordinate else { return }
-        
-        self.locationManager.stopUpdatingLocation()
-        setupMapCamera(lat: userLocation.latitude, lon: userLocation.longitude, zoom: 11)
-    }
-    
 }
 
 //MARK: -
