@@ -8,16 +8,24 @@
 import UIKit
 
 class NewsController: UIViewController {
-
+    private var news: [NewsModel]()
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        getData()
     }
-
-
-
+    
+    private func getData() {
+        BankFacilityProvider().getGems { [weak self] result in
+            guard let self else { return }
+            self.news = result
+            tableView.reloadData()
+        } failure: { errorString in
+            print(errorString)
+        }
+    }
+    
 }
