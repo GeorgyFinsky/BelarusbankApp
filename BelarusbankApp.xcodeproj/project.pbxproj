@@ -39,6 +39,7 @@
 		0C60625E2987D934005D7CA4 /* MapFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C60625C2987D934005D7CA4 /* MapFilterCell.swift */; };
 		0C60625F2987D934005D7CA4 /* MapFilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C60625D2987D934005D7CA4 /* MapFilterCell.xib */; };
 		0C60626129891E8C005D7CA4 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C60626029891E8C005D7CA4 /* NewsModel.swift */; };
+		0C88D86929892CEA00AB969D /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0C88D86829892CEA00AB969D /* SDWebImage */; };
 		B91ADAEFD48E1FB3FAA61A9D /* Pods_BelarusbankApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB44F660DBC6CD8C05C003D2 /* Pods_BelarusbankApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C88D86929892CEA00AB969D /* SDWebImage in Frameworks */,
 				B91ADAEFD48E1FB3FAA61A9D /* Pods_BelarusbankApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,6 +318,9 @@
 			dependencies = (
 			);
 			name = BelarusbankApp;
+			packageProductDependencies = (
+				0C88D86829892CEA00AB969D /* SDWebImage */,
+			);
 			productName = BelarusbankApp;
 			productReference = 0C6062012986BDA2005D7CA4 /* BelarusbankApp.app */;
 			productType = "com.apple.product-type.application";
@@ -344,6 +349,9 @@
 				Base,
 			);
 			mainGroup = 0C6061F82986BDA2005D7CA4;
+			packageReferences = (
+				0C88D86729892CEA00AB969D /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			productRefGroup = 0C6062022986BDA2005D7CA4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -678,6 +686,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0C88D86729892CEA00AB969D /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0C88D86829892CEA00AB969D /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0C88D86729892CEA00AB969D /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0C6061F92986BDA2005D7CA4 /* Project object */;
 }
