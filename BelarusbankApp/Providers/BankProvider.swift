@@ -63,4 +63,16 @@ final class BankFacilityProvider {
         }
     }
     
+    func GetNews(success: @escaping ArrayResponce<NewsModel>, failure: @escaping Error) {
+        provider.request(.getNews) { result in
+            switch result {
+                case .success(let responce):
+                    guard let result = try? JSONDecoder().decode([NewsModel].self, from: responce.data) else { return }
+                    success(result)
+                case .failure(let error):
+                    failure(error.localizedDescription)
+            }
+        }
+    }
+    
 }

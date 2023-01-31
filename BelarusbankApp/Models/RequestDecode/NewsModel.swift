@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NewsModel: Decodable, BankFacility {
+struct NewsModel: Decodable {
     var title: String = ""
     var imageUrl: String = ""
     var text: String = ""
