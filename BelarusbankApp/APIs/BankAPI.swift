@@ -13,6 +13,7 @@ enum BankAPI {
     case getDepartments
     case getGems
     case getIngots
+    case getNews
 }
 
 extension BankAPI: TargetType {
@@ -31,12 +32,14 @@ extension BankAPI: TargetType {
                 return "getgems"
             case .getIngots:
                 return "getinfodrall"
+            case .getNews:
+                return "news_info"
         }
     }
     
     var method: Moya.Method {
         switch self {
-            case .getAtm, .getDepartments, .getGems, .getIngots:
+            case .getAtm, .getDepartments, .getGems, .getIngots, .getNews:
                 return .get
         }
     }
@@ -56,12 +59,19 @@ extension BankAPI: TargetType {
     }
     
     var parameters: [String: Any]? {
-        return nil
+        var parametrs = [String: Any]()
+        
+        switch self {
+            case .getNews:
+                parametrs["lang"] = "ru"
+            default: return nil
+        }
+        return parametrs
     }
     
     var encoding: ParameterEncoding {
         switch self {
-            case .getAtm, .getDepartments, .getGems, .getIngots:
+            case .getAtm, .getDepartments, .getGems, .getIngots, .getNews:
                 return URLEncoding.queryString
         }
     }
