@@ -7,7 +7,7 @@
 
 import UIKit
 
-class IngotsController: UIViewController {
+final class IngotsController: UIViewController {
     private var departmentsIngot = [DepartmentIngots]()
     private var tableData = [DepartmentIngots]()
     private var segmentControlData = IngotType.allCases

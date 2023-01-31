@@ -19,9 +19,11 @@ final class BankFacilityProvider {
         provider.request(.getAtm) { result in
             switch result {
                 case .success(let responce):
+                    RealmManager().write(object: RequestRealmModel(code: responce.statusCode, type: .atms))
                     guard let result = try? JSONDecoder().decode([ATMModel].self, from: responce.data) else { return }
                     success(result)
                 case .failure(let error):
+                    RealmManager().write(object: RequestRealmModel(code: error.errorCode, type: .atms))
                     failure(error.localizedDescription)
             }
         }
@@ -31,9 +33,11 @@ final class BankFacilityProvider {
         provider.request(.getDepartments) { result in
             switch result {
                 case .success(let responce):
+                    RealmManager().write(object: RequestRealmModel(code: responce.statusCode, type: .departments))
                     guard let result = try? JSONDecoder().decode([DepartmentModel].self, from: responce.data) else { return }
                     success(result)
                 case .failure(let error):
+                    RealmManager().write(object: RequestRealmModel(code: error.errorCode, type: .departments))
                     failure(error.localizedDescription)
             }
         }
@@ -43,9 +47,11 @@ final class BankFacilityProvider {
         provider.request(.getGems) { result in
             switch result {
                 case .success(let responce):
+                    RealmManager().write(object: RequestRealmModel(code: responce.statusCode, type: .gems))
                     guard let result = try? JSONDecoder().decode([GemModel].self, from: responce.data) else { return }
                     success(result)
                 case .failure(let error):
+                    RealmManager().write(object: RequestRealmModel(code: error.errorCode, type: .gems))
                     failure(error.localizedDescription)
             }
         }
@@ -55,9 +61,11 @@ final class BankFacilityProvider {
         provider.request(.getIngots) { result in
             switch result {
                 case .success(let responce):
+                    RealmManager().write(object: RequestRealmModel(code: responce.statusCode, type: .ingots))
                     guard let result = try? JSONDecoder().decode([IngotModel].self, from: responce.data) else { return }
                     success(result)
                 case .failure(let error):
+                    RealmManager().write(object: RequestRealmModel(code: error.errorCode, type: .ingots))
                     failure(error.localizedDescription)
             }
         }
@@ -67,9 +75,11 @@ final class BankFacilityProvider {
         provider.request(.getNews) { result in
             switch result {
                 case .success(let responce):
+                    RealmManager().write(object: RequestRealmModel(code: responce.statusCode, type: .news))
                     guard let result = try? JSONDecoder().decode([NewsModel].self, from: responce.data) else { return }
                     success(result)
                 case .failure(let error):
+                    RealmManager().write(object: RequestRealmModel(code: error.errorCode, type: .news))
                     failure(error.localizedDescription)
             }
         }

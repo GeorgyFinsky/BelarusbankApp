@@ -7,14 +7,16 @@
 
 import UIKit
 
-class NewsController: UIViewController {
+final class NewsController: UIViewController {
     private var news = [NewsModel]()
-
+    
+    //MARK: -
+    //MARK: IBOutlets
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         tableView.dataSource = self
         tableView.delegate = self
         
@@ -39,6 +41,8 @@ class NewsController: UIViewController {
     
 }
 
+//MARK: -
+//MARK: UITableViewDataSource
 extension NewsController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,6 +57,8 @@ extension NewsController: UITableViewDataSource {
     
 }
 
+//MARK: -
+//MARK: UITableViewDelegate
 extension NewsController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GemsController: UIViewController {
+final class GemsController: UIViewController {
     private var gems = [GemModel]()
     private var filtredGems = [GemModel]() {
         didSet {

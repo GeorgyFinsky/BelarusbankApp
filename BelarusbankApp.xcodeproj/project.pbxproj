@@ -42,6 +42,9 @@
 		0C60626529892166005D7CA4 /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C60626329892166005D7CA4 /* NewsCell.swift */; };
 		0C60626629892166005D7CA4 /* NewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C60626429892166005D7CA4 /* NewsCell.xib */; };
 		0C7C19C6298941B8006F5007 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7C19C5298941B8006F5007 /* RealmManager.swift */; };
+		0C7C19C929894281006F5007 /* RequestRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7C19C829894281006F5007 /* RequestRealmModel.swift */; };
+		0C7C19CF29894A48006F5007 /* RequestsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7C19CD29894A48006F5007 /* RequestsTableCell.swift */; };
+		0C7C19D029894A48006F5007 /* RequestsTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C7C19CE29894A48006F5007 /* RequestsTableCell.xib */; };
 		0C88D86929892CEA00AB969D /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0C88D86829892CEA00AB969D /* SDWebImage */; };
 		0C88D86D2989309300AB969D /* FullNewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C88D86B2989309300AB969D /* FullNewsController.swift */; };
 		0C88D86E2989309300AB969D /* FullNewsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C88D86C2989309300AB969D /* FullNewsController.xib */; };
@@ -86,6 +89,9 @@
 		0C60626329892166005D7CA4 /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
 		0C60626429892166005D7CA4 /* NewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsCell.xib; sourceTree = "<group>"; };
 		0C7C19C5298941B8006F5007 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		0C7C19C829894281006F5007 /* RequestRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestRealmModel.swift; sourceTree = "<group>"; };
+		0C7C19CD29894A48006F5007 /* RequestsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestsTableCell.swift; sourceTree = "<group>"; };
+		0C7C19CE29894A48006F5007 /* RequestsTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RequestsTableCell.xib; sourceTree = "<group>"; };
 		0C88D86B2989309300AB969D /* FullNewsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullNewsController.swift; sourceTree = "<group>"; };
 		0C88D86C2989309300AB969D /* FullNewsController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FullNewsController.xib; sourceTree = "<group>"; };
 		5839BE8BEFACC72F7178D9F4 /* Pods-BelarusbankApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BelarusbankApp.release.xcconfig"; path = "Target Support Files/Pods-BelarusbankApp/Pods-BelarusbankApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -171,6 +177,7 @@
 		0C6062192986BDBB005D7CA4 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				0C7C19CC29894A26006F5007 /* RequestsTableCell */,
 				0C60626229892150005D7CA4 /* NewsCell */,
 				0C60625B2987D904005D7CA4 /* MapFilterCell */,
 				0C60623C2986BFAC005D7CA4 /* ProductCell */,
@@ -181,6 +188,7 @@
 		0C60621A2986BDC2005D7CA4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0C7C19C729894234006F5007 /* RealmModels */,
 				0C6062462986C10A005D7CA4 /* RequestDecode */,
 			);
 			path = Models;
@@ -321,6 +329,23 @@
 			path = Realm;
 			sourceTree = "<group>";
 		};
+		0C7C19C729894234006F5007 /* RealmModels */ = {
+			isa = PBXGroup;
+			children = (
+				0C7C19C829894281006F5007 /* RequestRealmModel.swift */,
+			);
+			path = RealmModels;
+			sourceTree = "<group>";
+		};
+		0C7C19CC29894A26006F5007 /* RequestsTableCell */ = {
+			isa = PBXGroup;
+			children = (
+				0C7C19CD29894A48006F5007 /* RequestsTableCell.swift */,
+				0C7C19CE29894A48006F5007 /* RequestsTableCell.xib */,
+			);
+			path = RequestsTableCell;
+			sourceTree = "<group>";
+		};
 		0C88D86A2989306E00AB969D /* FullNewsController */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,6 +436,7 @@
 				0C88D86E2989309300AB969D /* FullNewsController.xib in Resources */,
 				0C6062372986BEF9005D7CA4 /* IngotsController.xib in Resources */,
 				0C60626629892166005D7CA4 /* NewsCell.xib in Resources */,
+				0C7C19D029894A48006F5007 /* RequestsTableCell.xib in Resources */,
 				0C6062112986BDA2005D7CA4 /* LaunchScreen.storyboard in Resources */,
 				0C60622F2986BEC9005D7CA4 /* NewsController.xib in Resources */,
 				0C60623B2986BF0E005D7CA4 /* SettingsController.xib in Resources */,
@@ -495,8 +521,10 @@
 				0C6062272986BE9E005D7CA4 /* TabbarController.swift in Sources */,
 				0C88D86D2989309300AB969D /* FullNewsController.swift in Sources */,
 				0C60626129891E8C005D7CA4 /* NewsModel.swift in Sources */,
+				0C7C19C929894281006F5007 /* RequestRealmModel.swift in Sources */,
 				0C6062322986BEE5005D7CA4 /* GemsController.swift in Sources */,
 				0C60625A2987B30E005D7CA4 /* GetDataStatusType.swift in Sources */,
+				0C7C19CF29894A48006F5007 /* RequestsTableCell.swift in Sources */,
 				0C6062052986BDA2005D7CA4 /* AppDelegate.swift in Sources */,
 				0C6062522986C210005D7CA4 /* IngotType.swift in Sources */,
 				0C6062542986C223005D7CA4 /* FacilityType.swift in Sources */,

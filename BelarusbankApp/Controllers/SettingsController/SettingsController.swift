@@ -7,23 +7,40 @@
 
 import UIKit
 
-class SettingsController: UIViewController {
-
+final class SettingsController: UIViewController {
+    private var requests: [RequestRealmModel] = RealmManager().read()
+    
+    //MARK: -
+    //MARK: IBOutlets
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        tableView.dataSource = self
+        
+        registerCell()
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    private func registerCell() {
+        let requestCell = UINib(nibName: RequestsTableCell.id, bundle: nil)
+        tableView.register(requestCell, forCellReuseIdentifier: RequestsTableCell.id)
     }
-    */
+    
+}
 
+//MARK: -
+//MARK: UITableViewDataSource
+extension SettingsController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return requests.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let requestCell = tableView.dequeueReusableCell(withIdentifier: RequestsTableCell.id, for: indexPath)
+        (requestCell as? RequestsTableCell)?.set(request: requests[indexPath.row])
+        return requestCell
+    }
+    
 }
