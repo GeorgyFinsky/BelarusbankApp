@@ -18,7 +18,13 @@ class IngotsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        registerCell()
         setupSegmentControl()
+    }
+    
+    private func registerCell() {
+        let ingotCell = UINib(nibName: ProductCell.id, bundle: nil)
+        tableView.register(ingotCell, forCellReuseIdentifier: ProductCell.id)
     }
     
     private func setupSegmentControl() {
