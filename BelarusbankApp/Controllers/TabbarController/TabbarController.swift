@@ -22,13 +22,15 @@ class TabbarController: UITabBarController {
         let mapVC = MapController(nibName: String(describing: MapController.self), bundle: nil)
         let gemsVC = GemsController(nibName: String(describing: GemsController.self), bundle: nil)
         let ingotsVC = IngotsController(nibName: String(describing: IngotsController.self), bundle: nil)
+        let newsVC = NewsController(nibName: String(describing: NewsController.self), bundle: nil)
         let settingsVC = SettingsController(nibName: String(describing: SettingsController.self), bundle: nil)
         
-        self.viewControllers = [mapVC, gemsVC, ingotsVC, settingsVC]
+        self.viewControllers = [mapVC, gemsVC, ingotsVC, newsVC, settingsVC]
         mapVC.tabBarItem = UITabBarItem(title: "Карта", image: UIImage(systemName: "map"), tag: 0)
         gemsVC.tabBarItem = UITabBarItem(title: "Алмазы", image: UIImage(systemName: "pentagon"), tag: 1)
         ingotsVC.tabBarItem = UITabBarItem(title: "Слитки", image: UIImage(systemName: "rectangle.center.inset.fill"), tag: 2)
-        settingsVC.tabBarItem = UITabBarItem(title: "Настройки", image: UIImage(systemName: "gear"), tag: 3)
+        newsVC.tabBarItem = UITabBarItem(title: "Новости", image: UIImage(systemName: "newspaper"), tag: 3)
+        settingsVC.tabBarItem = UITabBarItem(title: "Настройки", image: UIImage(systemName: "gear"), tag: 4)
     }
     
 }
