@@ -38,6 +38,7 @@
 		0C60625A2987B30E005D7CA4 /* GetDataStatusType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C6062592987B30E005D7CA4 /* GetDataStatusType.swift */; };
 		0C60625E2987D934005D7CA4 /* MapFilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C60625C2987D934005D7CA4 /* MapFilterCell.swift */; };
 		0C60625F2987D934005D7CA4 /* MapFilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0C60625D2987D934005D7CA4 /* MapFilterCell.xib */; };
+		0C60626129891E8C005D7CA4 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C60626029891E8C005D7CA4 /* NewsModel.swift */; };
 		B91ADAEFD48E1FB3FAA61A9D /* Pods_BelarusbankApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB44F660DBC6CD8C05C003D2 /* Pods_BelarusbankApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,7 @@
 		0C6062592987B30E005D7CA4 /* GetDataStatusType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDataStatusType.swift; sourceTree = "<group>"; };
 		0C60625C2987D934005D7CA4 /* MapFilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFilterCell.swift; sourceTree = "<group>"; };
 		0C60625D2987D934005D7CA4 /* MapFilterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapFilterCell.xib; sourceTree = "<group>"; };
+		0C60626029891E8C005D7CA4 /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		5839BE8BEFACC72F7178D9F4 /* Pods-BelarusbankApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BelarusbankApp.release.xcconfig"; path = "Target Support Files/Pods-BelarusbankApp/Pods-BelarusbankApp.release.xcconfig"; sourceTree = "<group>"; };
 		5DE52FD254569A4716D10E35 /* Pods-BelarusbankApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BelarusbankApp.debug.xcconfig"; path = "Target Support Files/Pods-BelarusbankApp/Pods-BelarusbankApp.debug.xcconfig"; sourceTree = "<group>"; };
 		DB44F660DBC6CD8C05C003D2 /* Pods_BelarusbankApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BelarusbankApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -273,6 +275,7 @@
 				0C6062492986C142005D7CA4 /* DepartmentModel.swift */,
 				0C60624B2986C157005D7CA4 /* AtmModel.swift */,
 				0C60624D2986C16D005D7CA4 /* IngotModel.swift */,
+				0C60626029891E8C005D7CA4 /* NewsModel.swift */,
 			);
 			path = RequestDecode;
 			sourceTree = "<group>";
@@ -440,6 +443,7 @@
 				0C60622E2986BEC9005D7CA4 /* NewsController.swift in Sources */,
 				0C6062362986BEF9005D7CA4 /* IngotsController.swift in Sources */,
 				0C6062272986BE9E005D7CA4 /* TabbarController.swift in Sources */,
+				0C60626129891E8C005D7CA4 /* NewsModel.swift in Sources */,
 				0C6062322986BEE5005D7CA4 /* GemsController.swift in Sources */,
 				0C60625A2987B30E005D7CA4 /* GetDataStatusType.swift in Sources */,
 				0C6062052986BDA2005D7CA4 /* AppDelegate.swift in Sources */,
