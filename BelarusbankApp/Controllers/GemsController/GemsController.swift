@@ -8,8 +8,7 @@
 import UIKit
 
 final class GemsController: UIViewController {
-    private var gems = [GemModel]()
-    private var filtredGems = [GemModel]() {
+    private var gems = [GemModel]() {
         didSet {
             self.tableView.reloadData()
         }
@@ -39,13 +38,13 @@ final class GemsController: UIViewController {
         let selectionClosure = {(action: UIAction) in
             switch action.title {
                 case FilterType.priceFromLow.rawValue:
-                    self.filtredGems = self.gems.sorted { $0.price < $1.price }
+                    self.gems.sort { $0.price < $1.price }
                 case FilterType.priceFromHigh.rawValue:
-                    self.filtredGems = self.gems.sorted { $0.price > $1.price }
+                    self.gems.sort { $0.price > $1.price }
                 case FilterType.weightFromLow.rawValue:
-                    self.filtredGems = self.gems.sorted { $0.weight < $1.weight }
+                    self.gems.sort { $0.weight < $1.weight }
                 case FilterType.weightFromHight.rawValue:
-                    self.filtredGems = self.gems.sorted { $0.weight > $1.weight }
+                    self.gems.sort { $0.weight < $1.weight }
                 default: break
             }
         }
@@ -63,8 +62,8 @@ final class GemsController: UIViewController {
     private func getData() {
         BankFacilityProvider().getGems { [weak self] result in
             guard let self else { return }
-            self.gems = result
-            self.filtredGems = self.gems.sorted { $0.price < $1.price }
+            self.gems = result.sorted { $0.price < $1.price }
+            self.tableView.reloadData()
         } failure: { errorString in
             print(errorString)
         }
@@ -77,12 +76,12 @@ final class GemsController: UIViewController {
 extension GemsController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filtredGems.count
+        return gems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let gemCell = tableView.dequeueReusableCell(withIdentifier: ProductCell.id, for: indexPath)
-        (gemCell as? ProductCell)?.set(gem: filtredGems[indexPath.row])
+        (gemCell as? ProductCell)?.set(gem: gems[indexPath.row])
         return gemCell
     }
     
